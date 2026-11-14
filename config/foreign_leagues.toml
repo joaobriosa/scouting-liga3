@@ -1,0 +1,205 @@
+# Foreign leagues that count as "promotion" for the target variable.
+# Decided by the project owner on 2026-11-13.
+#
+# Group A  counts as promotion (same 450-minute rule as Liga 2 / I Liga, summed
+#          over seasons s+1 and s+2).
+# Group B  doubtful: target_observed = False, excluded from training.
+# Group C  does not count as promotion.
+#
+# Rules, applied in this order (revised 2026-11-13):
+#   1. tier >= 3 in any country                                    -> C
+#   2. UEFA country rank <= 30: tier 1                              -> A
+#   3. England, Spain, Germany, Italy, France: tier 2               -> A
+#   4. UEFA country rank 16-30: tier 2                              -> C
+#   5. UEFA country rank > 30 (tiers 1 and 2)                       -> C  (no request needed)
+#   6. non-UEFA countries in `non_uefa_group_a`: tier 1 -> A, tier >= 2 -> B
+#   7. other non-UEFA countries (e.g. Indonesia, Qatar, Angola)     -> B  (no request needed)
+#   8. remaining case: tier 2 of ranks 1-15 outside the big 5       -> B
+
+[ranking]
+source = "UEFA country coefficients ranking 2024 (end of 2023/24), kassiesa.net"
+url = "https://kassiesa.net/uefa/data/method5/crank2024.html"
+# Country codes as used by zerozero flags (ISO 3166-1 alpha-2; UK nations GB-XXX).
+order = [
+  "GB-ENG", "IT", "ES", "DE", "FR", "NL", "PT", "BE", "TR", "CZ",
+  "GB-SCT", "CH", "AT", "NO", "GR", "DK", "IL", "UA", "RS", "HR",
+  "PL", "RU", "CY", "HU", "SE", "RO", "BG", "AZ", "SK", "SI",
+  "MD", "XK", "KZ", "FI", "IE", "AM", "LV", "FO", "BA", "LI",
+  "IS", "GB-NIR", "LU", "LT", "MT", "GE", "AL", "EE", "BY", "MK",
+  "AD", "GB-WLS", "ME", "GI", "SM",
+]
+
+[calendar_year]
+# Countries whose leagues run in the calendar year. zerozero labels their career
+# rows "2025" and files them under the epoca_id of 2024/25. Owner decision
+# (2026-11-14): calendar year Y -> season Y/Y+1 (largest overlap). Rows of other
+# countries shown under a year label (e.g. a Portuguese club in the same epoca)
+# take the season of their epoca_id. List derived from the career table: countries
+# with year-labelled rows on their own (no other country in that year).
+countries = [
+  "AO", "AR", "BO", "BR", "BY", "CA", "CL", "CM", "CN", "CO", "CV", "DO", "EC",
+  "EE", "FI", "FO", "GE", "GM", "GQ", "IE", "IS", "JP", "KG", "KR", "KZ", "LT",
+  "LV", "MO", "MZ", "NO", "NZ", "PY", "SE", "ST", "US", "UY", "VE", "ZM",
+]
+
+[groups]
+top_rank = 15            # tier 2 of ranks <= 15 (outside the big 5) -> B
+tier1_a_max_rank = 30    # tier 1 of countries ranked <= 30 -> A
+low_rank_c = 30          # countries ranked > 30: tiers 1-2 -> C; ranks 16-30: tier 2 -> C
+big5_second_tier_a = ["GB-ENG", "ES", "DE", "IT", "FR"]
+non_uefa_group_a = ["US", "MX", "BR", "AR", "SA", "JP"]   # their tier 1 -> A
+
+# League name (as on zerozero) -> tier, per country, for 2022/23-2025/26.
+# Filled from the team pages collected; leagues not listed here are reported as
+# "unknown tier" for review. tier 9 = youth/reserve league (not senior) -> C.
+# A club page with no competition at all is an amateur club not covered by the
+# source; it is treated as tier >= 3 (group C) with tier_assumed = true.
+[tiers.AZ]
+"Premyer Liqasi" = 1
+[tiers.BE]
+"Eerste Klasse" = 1
+"Division 1" = 3        # Nationale 1 (Francs Borains 2022/23, promoted to tier 2 in 2023)
+[tiers.BG]
+"Parva Liga" = 1
+"Vtora Liga" = 2
+[tiers.CH]
+"Swiss Super League" = 1
+"Promotion League" = 3
+[tiers.CY]
+"Cypriot First Division" = 1
+"Cypriot Second Division" = 2
+[tiers.CZ]
+"1. Ceská Liga" = 1
+"2. Ceska Liga" = 2
+"3ª Divisão Checa" = 3
+[tiers.DE]
+"1. Bundesliga" = 1
+"2. Bundesliga" = 2
+"3. Liga" = 3
+"Regionalliga" = 4
+"Oberliga" = 5
+[tiers.ES]
+"La Liga" = 1
+"Segunda División" = 2
+"Primera División RFEF" = 3
+"Segunda División RFEF" = 4
+"Tercera División RFEF" = 5
+"Primera Futgal" = 6
+[tiers.FR]
+"Ligue 1" = 1
+"Ligue 2" = 2
+"Ligue 3" = 3            # Championnat National
+"4ª Divisão Francesa" = 4  # National 2
+"National 3" = 5
+[tiers.GB-ENG]
+"Premier League" = 1
+"Championship" = 2
+"League One" = 3
+"League Two" = 4
+"National League" = 5
+"National League North" = 6
+"Southern League" = 7
+"Premier League 2" = 9   # U21 league
+[tiers.GR]
+"A1 Ethniki Katigoria" = 1
+"Super League 2" = 2
+[tiers.HR]
+"HNL" = 1
+"Segunda Liga Croata" = 2
+[tiers.IL]
+"Ligat Al" = 1
+"Segunda Divisão Israelita" = 2
+[tiers.IT]
+"Serie A" = 1
+"Serie B" = 2
+"Serie C" = 3
+"Serie D" = 4
+"Primavera 1" = 9        # U19/U20 league
+[tiers.MX]
+"México Apertura" = 1
+"México Clausura" = 1
+"Liga Mexicana Sub-23" = 9
+[tiers.NL]
+"Eredivisie" = 1
+"Eerste Divisie" = 2
+[tiers.PL]
+"Ekstraklasa" = 1
+"I Liga" = 2
+"II Liga" = 3
+"III Liga" = 4
+[tiers.RO]
+"SuperLiga Romaniei" = 1
+"Liga II" = 2
+[tiers.RS]
+"Srpska liga" = 3
+[tiers.RU]
+"Rossiyskaya Premier-Liga" = 1
+"Pervaya Liga" = 2
+[tiers.SA]
+"Saudi Premier League" = 1
+"First Division League" = 2
+[tiers.SI]
+"Prva liga" = 1
+"2. Slovenska Liga" = 2
+[tiers.TR]
+"Süper Lig" = 1
+"1. Ligi A" = 2
+[tiers.UA]
+"Premyer-Liha" = 1
+
+# Added 2026-11-14 with the calendar-year fix. Brazilian state championships are
+# not national tiers: a club whose main competition is a state league plays
+# below Série B (no national division or Série C/D), so they get tier 4.
+[tiers.BR]
+"Brasileirão Série A" = 1
+"Brasileirão Série B" = 2
+"Brasileirão Série C" = 3
+"Brasileirão Série D" = 4
+"Brasileiro de Aspirantes" = 9
+"Goiano Sub-20" = 9
+"Paulista Sub-20 Série B" = 9
+"Acreano" = 4
+"Brasiliense 2ª Divisão" = 4
+"Campeonato Carioca" = 4
+"Campeonato Mineiro" = 4
+"Candango" = 4
+"Capixaba" = 4
+"Carioca 2ª Divisão" = 4
+"Catarinense" = 4
+"Catarinense Série B" = 4
+"Gaúcho Acesso" = 4
+"Goiano" = 4
+"Goiano 2ª Divisão" = 4
+"Goiano 3ª Divisão" = 4
+"Maranhense" = 4
+"Mato-Grossense" = 4
+"Mineiro 2ª Divisão" = 4
+"Mineiro Mód. II" = 4
+"Paranaense" = 4
+"Paranaense 2ª Divisão" = 4
+"Paranaense 3ªD" = 4
+"Paulista" = 4
+"Paulista A2" = 4
+"Paulista A3" = 4
+"Paulista A4" = 4
+"Potiguar 2ªD" = 4
+"Rondoniense" = 4
+[tiers.JP]
+"J1 League" = 1
+"J2 League" = 2
+"J3 League" = 3
+"J4 League" = 4
+[tiers.NO]
+"Eliteserien" = 1
+"Første Divisjon" = 2
+"2. Divisjon" = 3
+[tiers.SE]
+"Allsvenskan" = 1
+"Superettan" = 2
+"Ettan" = 3
+"Division 2" = 4
+[tiers.US]
+"MLS" = 1
+"USL Championship" = 2
+"MLS Next Pro" = 3
+"USL League One" = 3

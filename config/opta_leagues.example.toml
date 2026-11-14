@@ -1,0 +1,142 @@
+# Opta league ratings used by the target variable: TEMPLATE, ratings not included.
+#
+# Copy this file to config/opta_leagues.toml and fill in the values yourself.
+#
+# Rule: a destination league counts as "promotion" if its Opta Power Rankings
+# average team rating (league rankings, column OVERALL) is >= the rating of
+# Liga Portugal 2 (the Portuguese second tier). I Liga and Liga Portugal 2
+# always count. Leagues without a rating, or not mapped below, count as below.
+#
+# Where the numbers come from: Opta Power Rankings by Stats Perform / The Analyst,
+#   https://dataviz.theanalyst.com/opta-power-rankings/?leagueRankings=true
+# The original project used a single snapshot (2026-11-13) for every season.
+#
+# Why they are not included: the Stats Perform terms of use allow personal,
+# non-commercial use only and do not allow republishing the data. This public
+# copy therefore ships the structure and the zerozero -> Opta league mapping,
+# but none of the ratings. Read them on the page above and write them in.
+
+[meta]
+snapshot_date = "YYYY-MM-DD"               # date you read the rankings
+season_of_ratings = "YYYY/YY"
+threshold_league = "Portuguese Segunda Liga"
+# threshold = <rating of "Portuguese Segunda Liga">
+# sensitivity_thresholds = [<threshold - x>, <threshold + x>]
+
+# Opta league name -> average team rating (OVERALL). Fill in each value (listed alphabetically).
+[ratings]
+# "Azerbaijan Premier League" = <rating>
+# "Belgian Jupiler Pro League" = <rating>
+# "Bolivia Primera División" = <rating>
+# "Brack Super League" = <rating>
+# "Brazilian Paulista" = <rating>
+# "Brazilian Serie A" = <rating>
+# "Brazilian Serie B" = <rating>
+# "Bulgaria First League" = <rating>
+# "Colombia Primera A" = <rating>
+# "Croatia Prva HNL" = <rating>
+# "Cypriot Division 1" = <rating>
+# "Czech First League" = <rating>
+# "Dutch Eredivisie" = <rating>
+# "Ecuador Liga Pro" = <rating>
+# "Egyptian Premier League" = <rating>
+# "English Football League - Championship" = <rating>
+# "English Premier League" = <rating>
+# "French Ligue 1" = <rating>
+# "French Ligue 2" = <rating>
+# "German Bundesliga Zwei" = <rating>
+# "German Bundesliga" = <rating>
+# "Greek Super League" = <rating>
+# "Israeli Ligat Ha'al" = <rating>
+# "Italian Serie A" = <rating>
+# "Italian Serie B" = <rating>
+# "Korean K-League 1" = <rating>
+# "Mexican Primera" = <rating>
+# "Norwegian 1. divisjon" = <rating>
+# "Norwegian Eliteserien" = <rating>
+# "Paraguay Primera División" = <rating>
+# "Polish Ekstraklasa" = <rating>
+# "Portuguese Primeira Liga" = <rating>
+# "Portuguese Segunda Liga" = <rating>
+# "Romania Liga I" = <rating>
+# "Russian Premier League" = <rating>
+# "Saudi Arabian League" = <rating>
+# "Slovenia PrvaLiga" = <rating>
+# "Spanish La Liga" = <rating>
+# "Spanish Primera Division RFEF" = <rating>
+# "Spanish Segunda Division" = <rating>
+# "Turkish Super Lig" = <rating>
+# "US Major League Soccer" = <rating>
+# "Ukraine Premier League" = <rating>
+# "Venezuela Primera División" = <rating>
+
+# "COUNTRY|zerozero league name" -> Opta league name.
+[map]
+"AZ|Premyer Liqasi" = "Azerbaijan Premier League"
+"BE|Eerste Klasse" = "Belgian Jupiler Pro League"
+"BG|Parva Liga" = "Bulgaria First League"
+"BO|Liga Boliviana" = "Bolivia Primera División"
+"BR|Brasileirão Série A" = "Brazilian Serie A"
+"BR|Brasileirão Série B" = "Brazilian Serie B"
+"BR|Paulista" = "Brazilian Paulista"
+"BR|Série B" = "Brazilian Serie B"
+"CH|Swiss Super League" = "Brack Super League"
+"CO|Apertura" = "Colombia Primera A"          # owner, 2026-11-14 (Unión Magdalena 2024/25)
+"CO|Liga Colombiana Apertura" = "Colombia Primera A"
+"CO|Liga Colombiana Clausura" = "Colombia Primera A"
+"CO|Torneo Finalización" = "Colombia Primera A"
+"CY|Cypriot First Division" = "Cypriot Division 1"
+"CZ|1. Ceská Liga" = "Czech First League"
+"DE|1. Bundesliga" = "German Bundesliga"
+"DE|2. Bundesliga" = "German Bundesliga Zwei"
+"EC|Liga Pro Ecuador Serie A" = "Ecuador Liga Pro"
+"EG|Egyptian Premier League" = "Egyptian Premier League"
+"ES|La Liga" = "Spanish La Liga"
+"ES|Primera División RFEF" = "Spanish Primera Division RFEF"
+"ES|Segunda División" = "Spanish Segunda Division"
+"FR|Ligue 1" = "French Ligue 1"
+"FR|Ligue 2" = "French Ligue 2"
+"GB-ENG|Championship" = "English Football League - Championship"
+"GB-ENG|Premier League" = "English Premier League"
+"GR|A1 Ethniki Katigoria" = "Greek Super League"
+"HR|HNL" = "Croatia Prva HNL"
+"IL|Ligat Al" = "Israeli Ligat Ha'al"
+"IT|Serie A" = "Italian Serie A"
+"IT|Serie B" = "Italian Serie B"
+"KR|K-League 1" = "Korean K-League 1"
+"MX|México Apertura" = "Mexican Primera"
+"MX|México Clausura" = "Mexican Primera"
+"NL|Eredivisie" = "Dutch Eredivisie"
+"NO|Eliteserien" = "Norwegian Eliteserien"
+"NO|Første Divisjon" = "Norwegian 1. divisjon"
+"PL|Ekstraklasa" = "Polish Ekstraklasa"
+"PY|Liga Paraguaia Apertura" = "Paraguay Primera División"
+"PY|Liga Paraguaia Clausura" = "Paraguay Primera División"
+"RO|SuperLiga Romaniei" = "Romania Liga I"
+"RU|Rossiyskaya Premier-Liga" = "Russian Premier League"
+"SA|Saudi Premier League" = "Saudi Arabian League"
+"SI|Prva liga" = "Slovenia PrvaLiga"
+"TR|Süper Lig" = "Turkish Super Lig"
+"UA|Premyer-Liha" = "Ukraine Premier League"
+"US|MLS" = "US Major League Soccer"
+"VE|Primera División" = "Venezuela Primera División"
+
+# Club rows whose league is not on any cached page, set by hand (no request):
+# "club_source_id" = "COUNTRY|zerozero league name".
+[club_overrides]
+"24667" = "KR|K-League 1"   # Gangwon (owner, 2026-11-14)
+
+# Optional: ratings used ONLY in the descriptive 2026/27 section of the ranking
+# report (scripts/rank_season.py, scripts/destinations_next.py), for leagues not in
+# the main snapshot. Never read by the target, so they cannot change any label.
+[descriptive]
+snapshot_date = "YYYY-MM-DD"
+note = "descriptive section only"
+
+[descriptive.map]
+"DK|Superligaen" = "Danish Superligaen"
+"SE|Allsvenskan" = "Swedish Allsvenskan"
+
+[descriptive.ratings]
+# "Danish Superligaen" = <rating>
+# "Swedish Allsvenskan" = <rating>
